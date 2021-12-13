@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { AuthContext } from '../context/auth'
-import Service from '../fileupload/Service.js'
+
 
 
 
@@ -13,38 +13,51 @@ export default function PokeCards() {
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState(0)
     const [imageUrl, setImageUrl] = useState('')
+    const [description, setDescription] = useState('')
 
     const [pokemons, setPokemons] = useState([])
     const [fire, setFire] = useState(false)
+    const [file, setFile] = useState('')
 
     const storedToken = localStorage.getItem('authToken')
 
 
+    const uploadImage = (file) => {
+        return axios
+            .post("/pokecards/upload", file, { headers: { Authorization: `Bearer ${storedToken}` } })
+            .then(res => res.data)
+    };
 
-    const handleFileUpload = e => {     
+
+    const handleFileUpload = e => {
         const uploadData = new FormData();
-             uploadData.append("imageUrl", e.target.files[0]);
-     
-        Service
-          .uploadImage(uploadData)
-          .then(response => { console.log(response)
-            setImageUrl(response.secure_url);
-          })
-          .catch(err => console.log("Error while uploading the file: ", err));
-      };
+        console.log('uploadData', e.target.files[0])
+        uploadData.append("imageUrl", e.target.files[0]);
+
+
+        uploadImage(uploadData)
+            .then(response => {
+                console.log("drin")
+                console.log(response.secure_url)
+                setImageUrl(response.secure_url);
+            })
+            .catch(err => console.log("Error while uploading the file: ", err));
+    };
 
 
 
 
     const handleSubmit = e => {
         e.preventDefault()
-        const requestBody = { title: title, price: price, imageUrl: imageUrl, userId: user._id }
+        const requestBody = { title: title, description: description, price: price, imageUrl: imageUrl, userId: user._id }
+        if (imageUrl === "") return
         axios.post('/pokecards/pokemon', requestBody, { headers: { Authorization: `Bearer ${storedToken}` } })
 
             .then(() => {
                 setTitle('')
                 setPrice('')
                 setImageUrl('')
+                setDescription('')
                 setFire(!fire)
             })
             .catch(err => console.log(err))
@@ -53,6 +66,7 @@ export default function PokeCards() {
     useEffect(() => {
         axios.get('/pokecards/pokemon', { headers: { Authorization: `Bearer ${storedToken}` } })
             .then(response => {
+                console.log(response.data)
                 setPokemons(response.data.pokemons)
             })
             .catch(err => console.log(err))
@@ -63,24 +77,31 @@ export default function PokeCards() {
         <div>
             <h1> Add a Pokemon Card</h1>
 
-            <form onSubmit={handleSubmit}>
-                <label hmtlfor="title"> Title:</label>
+            <form className='pokemon-form' onSubmit={handleSubmit}>
+                <label hmtlfor="title"> Title : </label>
                 <input id="title"
                     type="text"
                     value={title}
                     onChange={e => setTitle(e.target.value)}>
                 </input>
-                <label hmtlfor="price"> Price</label>
+                <label hmtlfor="price"> Price : </label>
                 <input id="price"
                     type="Number"
                     value={price}
                     onChange={e => setPrice(e.target.value)}>
 
                 </input>
+                <label hmtlfor="description"> Description : </label>
+                <input className='input-description' id="description" placeholder=' write informations here'
 
-                <input id="file"
+                    type="text"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}>
+
+                </input>
+
+                <input className='file' id="file"
                     type="file"
-                    value={imageUrl}
                     name="imageUrl"
                     onChange={handleFileUpload}>
 
@@ -92,11 +113,13 @@ export default function PokeCards() {
 
             {
                 pokemons.map(pokemon => {
-                    return <h1 key={pokemon._id}>
-                        {pokemon.title}
-                        <p > {pokemon.price} $</p>
-                        <img src={pokemon.imageUrl}/>
-                    </h1>
+                    return <div className='pokecards' key={pokemon._id}>
+                         <img src={pokemon.imageUrl} />
+                        <h1> {pokemon.title}</h1>
+                        <p className='price'> {pokemon.price} $</p>
+                        <p className='description'>{pokemon.description}</p>
+                       
+                    </div>
 
 
                 })

@@ -1,42 +1,16 @@
-.App {
+.nav-center{
+  text-align: center;
+}
+.signup-h1{
+  text-align: center;
+}
+.login-h1{
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.homepage{
+  text-align: center;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 
 
 h1, h3, p {
@@ -135,9 +109,6 @@ h1, h3, p {
 }
 
 
-
-
-
 button {
   font-size: var(--btn-font);
   color: var(--light);
@@ -158,4 +129,39 @@ background-color: black;  font-family: sans-serif;
   
  }
 
- 
+ .pokecards {
+  height: 200px;
+    object-fit: contain;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: auto;
+    font-family: arial;
+    display: flex;
+    flex-direction: row;
+ }
+
+ .price {
+  color: grey;
+  font-size: 22px;
+}
+.pokemon-form {
+  background-color: #444343;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 30px;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+
+}
+.file {
+  margin: 0;
+  padding: 2rem 1.5rem;
+  font: 1rem/1.5 "PT Sans", Arial, sans-serif;
+  color: #5a5a5a;
+}
+
+.input-description {
+  height: 100px;
+}

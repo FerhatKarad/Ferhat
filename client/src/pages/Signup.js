@@ -31,7 +31,7 @@ export default function Signup() {
 
 	return (
 		<div>
-			<h1>Signup</h1>
+			<h1 className="signup-h1">Signup</h1>
 			<div className='loginsignup-form'>
 			<form className='sign-log-form' onSubmit={handleSubmit}>
 				<div className='title'>Welcome</div>

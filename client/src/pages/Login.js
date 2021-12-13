@@ -25,7 +25,6 @@ export default function Login() {
 		axios.post('/auth/login', requestBody)
 			.then(response => {
 
-				console.log('i have a token mothafuckas', response.data.authToken)
 				const token = response.data.authToken
 				loginUser(token)
 				navigate('/pokecards')
@@ -38,30 +37,30 @@ export default function Login() {
 
 	return (
 		<div>
-			<h1>Login</h1>
+			<h1 className='login-h1'>Login</h1>
 			<div className='loginsignup-form'>
-			<form className='sign-log-form' onSubmit={handleSubmit}>
-			<div className='title'>Welcome</div>
-			<div className="subtitle">Log in to continue to Website!</div>
-			<div className="input-container ic1">
-				<input id="email" className="input" placeholder="Enter Your Email " type="text" name="email" value={email} onChange={handleEmail} />
-				<div className="cut"></div>
-			    <div className='input-container ic2'>
-				<input id='password' className='input' placeholder="Enter Your Password" type="password" value={password} onChange={handlePassword} />
+				<form className='sign-log-form' onSubmit={handleSubmit}>
+					<div className='title'>Welcome</div>
+					<div className="subtitle">Log in to continue to Website!</div>
+					<div className="input-container ic1">
+						<input id="email" className="input" placeholder="Enter Your Email " type="text" name="email" value={email} onChange={handleEmail} />
+						<div className="cut"></div>
+						<div className='input-container ic2'>
+							<input id='password' className='input' placeholder="Enter Your Password" type="password" value={password} onChange={handlePassword} />
 
-				<button className='submit' type="submit">Log In</button>
-				{errorMessage && <p className='signup-message'>{errorMessage}</p>}
+							<button className='submit' type="submit">Log In</button>
+							{errorMessage && <p className='signup-message'>{errorMessage}</p>}
 
-			         <p className='signup-message'>Don´t have an account?</p>
-			         <Link className='link-signuptologin' to='/signup'>Signup</Link>
-				</div>
-				
-				</div>
-			</form>
+							<p className='signup-message'>Don´t have an account?</p>
+							<Link className='link-signuptologin' to='/signup'>Signup</Link>
+						</div>
+
+					</div>
+				</form>
 			</div>
 
-		
-		
+
+
 		</div>
 	)
 }

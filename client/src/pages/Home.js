@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Home() {
 	return (
-		<div>
+		<div className='homepage'>
 	<>
       <h1>Welcome To Pokebuy</h1>
 	  <img src='https://www.gate-to-the-games.de/images/contentpics/pokemon-karten-kaufen.webp'/>

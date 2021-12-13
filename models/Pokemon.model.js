@@ -1,9 +1,21 @@
 const { Schema, model, SchemaTypes } = require('mongoose')
 const pokemonSchema = new Schema(
   {
-    title: String,
-    price: Number,
-    imageUrl: String,
+    title: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+
+    description: String,
+
+    imageUrl: {
+      type: String,
+      required: true
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
