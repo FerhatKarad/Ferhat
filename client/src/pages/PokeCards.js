@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { AuthContext } from '../context/auth'
+import { Link } from 'react-router-dom'
 
 
 
@@ -114,10 +115,14 @@ export default function PokeCards() {
             {
                 pokemons.map(pokemon => {
                     return <div className='pokecards' key={pokemon._id}>
-                         <img src={pokemon.imageUrl} />
                         <h1> {pokemon.title}</h1>
+                         <img className='box' src={pokemon.imageUrl} />
+                        
                         <p className='price'> {pokemon.price} $</p>
                         <p className='description'>{pokemon.description}</p>
+                         <Link to={`/pokecards/edit/${pokemon._id}`}>
+						<button>Edit this PokeCard</button>
+					</Link> 
                        
                     </div>
 
