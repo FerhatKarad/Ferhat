@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useState, useEffect, useContext } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/auth'
 
 
@@ -20,6 +20,31 @@ export default function EditPokeCards() {
 
     const storedToken = localStorage.getItem('authToken')
 
+
+    const uploadImage = (file) => {
+        return axios
+            .post("/pokecards/upload", file, { headers: { Authorization: `Bearer ${storedToken}` } })
+            .then(res => res.data)
+    };
+
+
+    const handleFileUpload = e => {
+        const uploadData = new FormData();
+        console.log('uploadData', e.target.files[0])
+        uploadData.append("imageUrl", e.target.files[0]);
+
+
+        uploadImage(uploadData)
+            .then(response => {
+                console.log("drin")
+                console.log(response.secure_url)
+                setImageUrl(response.secure_url);
+            })
+            .catch(err => console.log("Error while uploading the file: ", err));
+    };
+
+
+
     useEffect(() => {
         axios.get(`/pokecards/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
             .then(response => {
@@ -34,21 +59,23 @@ export default function EditPokeCards() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        const requestBody = { title ,price,  description }
+        const requestBody = { title, price, imageUrl, description }
         axios.put(`/pokecards/${id}`, requestBody, { headers: { Authorization: `Bearer ${storedToken}` } })
-            .then(response => { console.log(response)
+            .then(response => {
+                console.log(response)
                 navigate(`/pokecards`)
             })
     }
 
     const deletePokeCard = () => {
-		axios.delete(`/pokecards/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
-			.then(() => { console.log("deleted")
-				// redirect to the projects list 
-				navigate('/pokecards')
-			})
-			.catch(err => console.log(err))
-        }
+        axios.delete(`/pokecards/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
+            .then(() => {
+                console.log("deleted")
+                // redirect to the projects list 
+                navigate('/pokecards')
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <div>
@@ -78,15 +105,15 @@ export default function EditPokeCards() {
 
                 </input>
 
-                 {/* <input className='file' id="file"
+                <input className='file' id="file"
                     type="file"
                     name="imageUrl"
                     onChange={handleFileUpload}>
 
-                </input>  */}
-                <Link to={`/pokecards`}>
-						<button>Edit this PokeCard</button>
-					</Link> 
+                </input>
+            
+                    <button>Edit this PokeCard</button>
+              
             </form>
             <button onClick={deletePokeCard}>Delete this Pokecard from your List</button>
 

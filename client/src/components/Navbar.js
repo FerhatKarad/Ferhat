@@ -21,12 +21,17 @@ export default function Navbar() {
 			{isLoggedIn ?
 				(
 					<>
+					<Link to='/pokebuy'> <button>PokeBuy</button>
+						</Link>
 						<Link to='/pokecards'>
 							<button>PokeCards</button>
 						</Link>
+						
 						<Link to='/'>
 						<button onClick={logoutUser}>Logout</button>
 						</Link>
+
+						
 					</>
 				) : (
 					<>
