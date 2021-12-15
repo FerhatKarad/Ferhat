@@ -11,6 +11,7 @@ export default function PokeCards() {
 
     const { user } = useContext(AuthContext)
 
+
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState(0)
     const [imageUrl, setImageUrl] = useState('')
@@ -36,6 +37,7 @@ export default function PokeCards() {
         uploadData.append("imageUrl", e.target.files[0]);
 
 
+        
         uploadImage(uploadData)
             .then(response => {
                 console.log("drin")
@@ -65,15 +67,19 @@ export default function PokeCards() {
     }
 
     useEffect(() => {
+        // const requestBody = user._id
+        // console.log(requestBody)
+        console.log(user)
         axios.get('/pokecards/pokemon', { headers: { Authorization: `Bearer ${storedToken}` } })
-            .then(response => {
-                console.log(response.data)
+            .then(response => { console.log(response.data.pokemons[0].userId._id)
                 setPokemons(response.data.pokemons)
             })
             .catch(err => console.log(err))
     }, [fire])
 
     if (pokemons.length === 0) return <></>
+
+    
     return (
         <div>
             <h1> Add a Pokemon Card</h1>
@@ -114,7 +120,8 @@ export default function PokeCards() {
 
             {
                 pokemons.map(pokemon => {
-                    return <div className='pokecards' key={pokemon._id}>
+                    if (user._id === pokemon.userId._id)
+                    {return <div className='pokecards' key={pokemon._id}>
                         <h1> {pokemon.title}</h1>
                          <img className='box' src={pokemon.imageUrl} />
                         
@@ -124,7 +131,7 @@ export default function PokeCards() {
 						<button>Edit this PokeCard</button>
 					</Link> 
                        
-                    </div>
+                    </div>}
 
 
                 })

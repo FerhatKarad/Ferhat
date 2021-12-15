@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const Pokemon = require('../models/Pokemon.model')
 const { fileUploader, cloudinary } = require('../config/cloudinary.js');
+const { isAuthenticated } = require('./../middleware/jwt.js')
 
 router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
   console.log(req.file.path)
@@ -13,10 +14,20 @@ router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
 });
 
 router.post('/pokemon', (req, res, next) => {
-  const { title, price, imageUrl, userId, description } = req.body
+  const { title, price, imageUrl, userId, description  } = req.body
   console.log(req.body)
+//   pokemonCards: [{ 
+//     type: Schema.Types.ObjectId,
+//     ref: 'Pokemon' }]
+// });
+  Pokemon.create({
+    title,
+    price,
+    imageUrl,
+    userId,
+    description,
 
-  Pokemon.create({ title, price, imageUrl, userId, description })
+  })
     .then((createdPokemon) => {
       console.log(createdPokemon)
       res.status(201).json({ createdPokemon });
@@ -25,9 +36,17 @@ router.post('/pokemon', (req, res, next) => {
 })
 
 router.get('/pokemon', (req, res, next) => {
-
+  const {userId} = req.body
+  
+  console.log(req.body)
+  
   Pokemon.find()
-    .then((pokemons) => res.status(200).json({ pokemons }))
+  .populate('userId')
+    .then((pokemons) => {
+      // console.log(pokemons.userId._id)
+      res.status(200).json({ pokemons })
+    })
+    
     .catch(err => res.status(400).json(err))
 })
 
@@ -50,20 +69,21 @@ router.put('/:id', (req, res, next) => {
     title,
     price,
     imageUrl,
-    description
-  }, { new : true})
-  .then(updatedPokemon => {
-    res.status(200).json(updatedPokemon)
-  })
-  .catch(err => next(err))
+    description,
+    userId
+  }, { new: true })
+    .then(updatedPokemon => {
+      res.status(200).json(updatedPokemon)
+    })
+    .catch(err => next(err))
 })
 
 
 router.delete('/:id', (req, res, next) => {
   Pokemon.findByIdAndDelete(req.params.id)
-  .then(() => {
-    res.status(200).json({ message: 'pokemon deleted' })
-  })
+    .then(() => {
+      res.status(200).json({ message: 'pokemon deleted' })
+    })
 })
 
 module.exports = router;

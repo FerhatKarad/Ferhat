@@ -7,7 +7,7 @@ import Navbar from './components/Navbar';
 import PokeCards from './pages/PokeCards';
 import EditPokeCards from './pages/EditPokeCards';
 import PokeBuy from './pages/PokeBuy';
-import ProtectedRoute from './components/ProtectedRoute';
+//import ProtectedRoute from './components/ProtectedRoute';
 
 
 function App() {
@@ -19,16 +19,18 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/pokecards' element={<PokeCards />} />
         <Route path='/pokebuy' element={<PokeBuy />} />
+        
 
-        <Route 											
+        {/* <Route 											
           path='/pokecards'
           element={
             <ProtectedRoute redirectTo='/login'>
               <PokeCards />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
 
         {/* <Route path='/pokecards' element={<PokeCards/>}/> */}

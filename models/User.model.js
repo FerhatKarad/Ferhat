@@ -15,7 +15,10 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true
-    }
+    },
+    pokemonCards: [{ 
+      type: Schema.Types.ObjectId,
+      ref: 'Pokemon' }]
   });
 
 const User = model("User", userSchema);
