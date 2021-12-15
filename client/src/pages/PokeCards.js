@@ -4,25 +4,19 @@ import axios from 'axios'
 import { AuthContext } from '../context/auth'
 import { Link } from 'react-router-dom'
 
-
-
-
 export default function PokeCards() {
 
     const { user } = useContext(AuthContext)
-
 
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState(0)
     const [imageUrl, setImageUrl] = useState('')
     const [description, setDescription] = useState('')
-
     const [pokemons, setPokemons] = useState([])
     const [fire, setFire] = useState(false)
     const [file, setFile] = useState('')
 
     const storedToken = localStorage.getItem('authToken')
-
 
     const uploadImage = (file) => {
         return axios
@@ -33,22 +27,14 @@ export default function PokeCards() {
 
     const handleFileUpload = e => {
         const uploadData = new FormData();
-        console.log('uploadData', e.target.files[0])
         uploadData.append("imageUrl", e.target.files[0]);
 
-
-        
         uploadImage(uploadData)
             .then(response => {
-                console.log("drin")
-                console.log(response.secure_url)
                 setImageUrl(response.secure_url);
             })
             .catch(err => console.log("Error while uploading the file: ", err));
     };
-
-
-
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -67,19 +53,14 @@ export default function PokeCards() {
     }
 
     useEffect(() => {
-        // const requestBody = user._id
-        // console.log(requestBody)
-        console.log(user)
         axios.get('/pokecards/pokemon', { headers: { Authorization: `Bearer ${storedToken}` } })
-            .then(response => { console.log(response.data.pokemons[0].userId._id)
-                setPokemons(response.data.pokemons)
-            })
+            .then(response =>
+                setPokemons(response.data.pokemons))
             .catch(err => console.log(err))
     }, [fire])
 
     if (pokemons.length === 0) return <></>
 
-    
     return (
         <div>
             <h1> Add a Pokemon Card</h1>
@@ -120,18 +101,19 @@ export default function PokeCards() {
 
             {
                 pokemons.map(pokemon => {
-                    if (user._id === pokemon.userId._id)
-                    {return <div className='pokecards' key={pokemon._id}>
-                        <h1> {pokemon.title}</h1>
-                         <img className='box' src={pokemon.imageUrl} />
-                        
-                        <p className='price'> {pokemon.price} $</p>
-                        <p className='description'>{pokemon.description}</p>
-                         <Link to={`/pokecards/edit/${pokemon._id}`}>
-						<button>Edit this PokeCard</button>
-					</Link> 
-                       
-                    </div>}
+                    if (user && user._id === pokemon.userId._id) {
+                        return <div className='pokecards' key={pokemon._id}>
+                            <h1> {pokemon.title}</h1>
+                            <img className='box' src={pokemon.imageUrl} />
+
+                            <p className='price'> {pokemon.price} $</p>
+                            <p className='description'>{pokemon.description}</p>
+                            <Link to={`/pokecards/edit/${pokemon._id}`}>
+                                <button>Edit this PokeCard</button>
+                            </Link>
+
+                        </div>
+                    }
 
 
                 })

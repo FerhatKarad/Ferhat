@@ -16,10 +16,6 @@ router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
 router.post('/pokemon', (req, res, next) => {
   const { title, price, imageUrl, userId, description  } = req.body
   console.log(req.body)
-//   pokemonCards: [{ 
-//     type: Schema.Types.ObjectId,
-//     ref: 'Pokemon' }]
-// });
   Pokemon.create({
     title,
     price,
