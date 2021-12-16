@@ -59,7 +59,7 @@ export default function PokeCards() {
             .catch(err => console.log(err))
     }, [fire])
 
-    if (pokemons.length === 0) return <></>
+    //if (pokemons.length === 0) return <></>
 
     return (
         <div>
