@@ -27,6 +27,14 @@ app.use("/auth", auth);
 const pokemon = require("./routes/pokemon");
 app.use("/pokecards", isAuthenticated, pokemon)
 
+const path = require('path');
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.use((req, res) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/client/build/index.html");
+});
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
