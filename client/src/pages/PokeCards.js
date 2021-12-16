@@ -4,6 +4,7 @@ import axios from 'axios'
 import { AuthContext } from '../context/auth'
 import { Link } from 'react-router-dom'
 
+
 export default function PokeCards() {
 
     const { user } = useContext(AuthContext)
@@ -56,6 +57,7 @@ export default function PokeCards() {
         axios.get('/pokecards/pokemon', { headers: { Authorization: `Bearer ${storedToken}` } })
             .then(response =>
                 setPokemons(response.data.pokemons))
+                
             .catch(err => console.log(err))
     }, [fire])
 
@@ -72,6 +74,7 @@ export default function PokeCards() {
                     value={title}
                     onChange={e => setTitle(e.target.value)}>
                 </input>
+
                 <label hmtlfor="price"> Price : </label>
                 <input id="price"
                     type="Number"
@@ -103,12 +106,12 @@ export default function PokeCards() {
                 pokemons.map(pokemon => {
                     if (user && user._id === pokemon.userId._id) {
                         return <div className='pokecards' key={pokemon._id}>
-                            <h1> {pokemon.title}</h1>
+                         
                             <img className='box' src={pokemon.imageUrl} />
-
+                            <h1 className='title-form'> {pokemon.title}</h1>
                             <p className='price'> {pokemon.price} $</p>
                             <p className='description'>{pokemon.description}</p>
-                            <Link to={`/pokecards/edit/${pokemon._id}`}>
+                            <Link className='edit-btn' to={`/pokecards/edit/${pokemon._id}`}>
                                 <button>Edit this PokeCard</button>
                             </Link>
 

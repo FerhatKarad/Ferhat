@@ -4,10 +4,8 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 export default function PokeBuy() {
-   
-    
+     
     const [query, setQuery] = useState('')
-
     const [pokemons, setPokemons] = useState([])
     const [fire, setFire] = useState(false)
 
@@ -19,13 +17,12 @@ const handleSearch = event => {
 
    useEffect(() => {
     axios.get('/pokecards/pokemon', { headers: { Authorization: `Bearer ${storedToken}` } })
-        .then(response => 
+        .then(response =>        
             setPokemons(response.data.pokemons))
+           
         .catch(err => console.log(err))
 }, [fire])
  
-
-
 let pokemonsList  = pokemons.filter(pokemon =>
     `${pokemon.title}`.toLowerCase().includes(query)
   );
@@ -35,21 +32,25 @@ let pokemonsList  = pokemons.filter(pokemon =>
 
             <h1>Hi PokeBuy</h1>
             <form>
-            <label hmtlfor="search" placeholder='Search by Name'> Search by Name : </label>
-                <input id="search"
+            <label  hmtlfor="search" placeholder='Search by Name'> Search Your Pokecard : </label>
+                <input className='search-form' id="search"
                     type="text"
                     value={query}
                     onChange={handleSearch}
+                    
                 />
                
             </form>
+
         {
             pokemonsList.map(pokemon => {return <div className='pokecards' key={pokemon._id}>
-            <h1> {pokemon.title}</h1>
-             <img className='box' src={pokemon.imageUrl} />
             
+             <img className='box' src={pokemon.imageUrl} />   
+             <h1 className='title-form'>{pokemon.title}</h1>
             <p className='price'> {pokemon.price} $</p>
             <p className='description'>{pokemon.description}</p>
+            <p className='pokecard-owner'>By:{pokemon.userId.name}
+            <button>click to chat</button></p>
              
            
         </div>})

@@ -30,14 +30,11 @@ export default function EditPokeCards() {
 
     const handleFileUpload = e => {
         const uploadData = new FormData();
-        console.log('uploadData', e.target.files[0])
         uploadData.append("imageUrl", e.target.files[0]);
 
 
         uploadImage(uploadData)
             .then(response => {
-                console.log("drin")
-                console.log(response.secure_url)
                 setImageUrl(response.secure_url);
             })
             .catch(err => console.log("Error while uploading the file: ", err));
@@ -57,16 +54,18 @@ export default function EditPokeCards() {
             .catch(err => console.log(err))
     }, [])
 
+    // for edit
+    
     const handleSubmit = e => {
         e.preventDefault()
         const requestBody = { title, price, imageUrl, description }
         axios.put(`/pokecards/${id}`, requestBody, { headers: { Authorization: `Bearer ${storedToken}` } })
             .then(response => {
-                console.log(response)
                 navigate(`/pokecards`)
             })
     }
 
+     // for delete cards
     const deletePokeCard = () => {
         axios.delete(`/pokecards/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
             .then(() => {
