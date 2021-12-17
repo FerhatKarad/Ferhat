@@ -116,6 +116,7 @@ button {
   border-radius: 5px;
   padding: 10px 50px;
   margin: 0 5px;
+  color: black;
    
 }
 .button:active {
@@ -126,7 +127,6 @@ button {
  body {
   color: black;
 background-color: black;  font-family: sans-serif;
-  
  }
 
 
