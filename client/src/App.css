@@ -157,6 +157,7 @@ background-color: black;  font-family: sans-serif;
     width: 100%;
     margin-bottom: 16px;
     padding: 0 8px;
+    
  }
 
  .price {
@@ -179,6 +180,23 @@ background-color: black;  font-family: sans-serif;
 
 .search-form{
   margin-bottom: 50px;  
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  border: none;
+  background: #e0dbdb;
+  width: 130px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  background-image: url('https://assets.codepen.io/13471/sparkles.gif');
+}
+
+.search-form:focus{
+  width: 30%;
+  color: white;
+  background-image: url('https://assets.codepen.io/13471/sparkles.gif');
+
 }
 
 .edit-btn{
@@ -202,6 +220,9 @@ background-color: black;  font-family: sans-serif;
   color: red;
 }
 
+.last-line {
+padding-bottom: 50px;
+}
 
 
 

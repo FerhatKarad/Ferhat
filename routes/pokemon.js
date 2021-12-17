@@ -39,7 +39,6 @@ router.get('/pokemon', (req, res, next) => {
   Pokemon.find()
   .populate('userId')
     .then((pokemons) => {
-      // console.log(pokemons.userId._id)
       res.status(200).json({ pokemons })
     })
     

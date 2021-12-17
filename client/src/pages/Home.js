@@ -41,7 +41,7 @@ export default function Home() {
     <div className="card"><span></span></div>
   </section>
 
-  <h3>What are you waiting for?</h3>
+  <h3 className="last-line">What are you waiting for?</h3>
 
 </main>
 	  
