@@ -30,44 +30,33 @@ export default function Signup() {
 	}
 
 	return (
-		<section className="hero has-background-grey-light is-fullheight is-fullwidth">
-			<div className="hero-body">
-				<div className='container'>
-					<div className="columns is-centered">
-						<div className="column is-4-desktop">
-						<form onSubmit={handleSubmit} className="box">
-                                <p className="has-text-centered"></p>
-                                <div className="field mt-5">
-                                    <label className="label">Name</label>
-                                    <div className="controls">
-                                        <input type="text" className="input" placeholder="Name"
-                                            value={name} onChange={handleName} />
-                                    </div>
-                                </div>
-                                <div className="field mt-5">
-                                    <label className="label">Email</label>
-                                    <div className="controls">
-                                        <input type="text" className="input" placeholder="Email" value={email} onChange={handleEmail} />
-                                    </div>
-                                </div>
-                                <div className="field mt-5">
-                                    <label className="label">Password</label>
-                                    <div className="controls">
-                                        <input type="password" className="input" placeholder="******" value={password} onChange={handlePassword} />
-                                    </div>
-                                </div>
-                                <div className="field mt-5">
-                                    <button className="button is-success is-fullwidth">Register</button>
-									{errorMessage && <p className='signup-message'>{errorMessage}</p>}
-                                </div>
-								<p className='signup-message'>Already have an account?</p>
-								<Link className='link-signuptologin' to='/login'>Login</Link>
-                            </form>
+		<div>
+			<h1 className="signup-h1">Signup</h1>
+			<div className='loginsignup-form'>
+			<form className='sign-log-form' onSubmit={handleSubmit}>
+				<div className='title'>Welcome</div>
+				<div className="subtitle">Let's create your account!</div>
+				<div className="input-container ic1">
+				<input id="email" className="input" placeholder="Enter Your Email " type="text" name="email" value={email} onChange={handleEmail} />
+				<div className="cut"></div>
+			    <div className='input-container ic2'>
+				<input id='password' className='input' placeholder="Enter Your Password" type="password" value={password} onChange={handlePassword} />
+				<div className="cut"></div>
+				<div className="input-container ic2">
+				<input id='name' className='input' type="text" placeholder="Enter Your Name" value={name} onChange={handleName} />
+				
+				<button className='submit' type="submit">Sign Up</button>
+				{errorMessage && <p className='signup-message'>{errorMessage}</p>}
 
-						</div>
-					</div>
+			<p className='signup-message'>Already have an account?</p>
+			<Link className='link-signuptologin' to='/login'>Login</Link>
 				</div>
-				</div>
-		</section>
+			  </div>
+            </div>
+			</form>
+			</div>
+
+			
+		</div>
 	)
 }

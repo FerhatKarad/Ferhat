@@ -4,6 +4,7 @@ import axios from 'axios'
 import { AuthContext } from '../context/auth'
 
 
+
 export default function Login() {
 
 	const [email, setEmail] = useState('')
@@ -11,6 +12,7 @@ export default function Login() {
 	const [errorMessage, setErrorMessage] = useState(undefined)
 
 	const navigate = useNavigate()
+
 	const { loginUser } = useContext(AuthContext)
 
 	const handleEmail = e => setEmail(e.target.value)
@@ -25,7 +27,7 @@ export default function Login() {
 
 				const token = response.data.authToken
 				loginUser(token)
-				navigate('/dashboard')
+				navigate('/pokecards')
 			})
 			.catch(err => {
 				const errorDescrition = err.response.data.message
@@ -34,39 +36,32 @@ export default function Login() {
 	}
 
 	return (
-		<>
-			<section className="hero has-background-grey-light is-fullheight is-fullwidth">
-				<div className="hero-body">
-					<div className="container">
-						<div className="columns is-centered">
-							<div className="column is-4-desktop">
-								<form onSubmit={handleSubmit} className="box">
-									<p className="has-text-centered"></p>
-									<div className="field mt-5">
-										<label className="label">Email or Name</label>
-										<div className="controls">
-											<input type="text" className="input" placeholder="Username" value={email} onChange={handleEmail} />
-										</div>
-									</div>
-									<div className="field mt-5">
-										<label className="label">Password</label>
-										<div className="controls">
-											<input type="password" className="input" placeholder="******" value={password} onChange={handlePassword} />
-										</div>
-									</div>
-									<div className="field mt-5">
-										<button className="button is-success is-fullwidth">Login</button>
-										{errorMessage && <p className='signup-message'>{errorMessage}</p>}
-										<p className='signup-message'>Don´t have an account?</p>
-										<Link className='link-signuptologin' to='/signup'>Signup</Link>
-									</div>
-								</form>
-							</div>
+		<div>
+			<h1 className='login-h1'>Login</h1>
+			<div className='loginsignup-form'>
+				<form className='sign-log-form' onSubmit={handleSubmit}>
+					<div className='title'>Welcome</div>
+					<div className="subtitle">Log in to continue to Website!</div>
+					<div className="input-container ic1">
+						<input id="email" className="input" placeholder="Enter Your Email " type="text" name="email" value={email} onChange={handleEmail} />
+						<div className="cut"></div>
+						<div className='input-container ic2'>
+							<input id='password' className='input' placeholder="Enter Your Password" type="password" value={password} onChange={handlePassword} />
+
+							<button className='submit' type="submit">Log In</button>
+							{errorMessage && <p className='signup-message'>{errorMessage}</p>}
+
+							<p className='signup-message'>Don´t have an account?</p>
+							<Link className='link-signuptologin' to='/signup'>Signup</Link>
 						</div>
+
 					</div>
-				</div>
-			</section>
-		</>
+				</form>
+			</div>
+
+
+
+		</div>
 	)
 }
 

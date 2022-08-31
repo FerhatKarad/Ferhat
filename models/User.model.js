@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 
+// TODO: Please make sure you edit the user model to whatever makes sense in this case
 const userSchema = new Schema(
   {
     email: {
@@ -15,6 +16,9 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
+    pokemonCards: [{ 
+      type: Schema.Types.ObjectId,
+      ref: 'Pokemon' }]
   });
 
 const User = model("User", userSchema);
